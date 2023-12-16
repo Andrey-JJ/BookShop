@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/books">
+
+    <fragment
+        android:id="@+id/books"
+        android:name="ru.mivlgu.bookshop.ui.book.BooksFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_books" />
+
+    <fragment
+        android:id="@+id/authors"
+        android:name="ru.mivlgu.bookshop.ui.author.AuthorFragment"
+        android:label="@string/authors"
+        tools:layout="@layout/fragment_author" />
+
+    <fragment
+        android:id="@+id/publishers"
+        android:name="ru.mivlgu.bookshop.ui.publisher.PublisherFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_publisher" />
+
+    <fragment
+        android:id="@+id/categories"
+        android:name="ru.mivlgu.bookshop.ui.category.CategoryFragment"
+        android:label="@string/categories"
+        tools:layout="@layout/fragment_category" />
+
+    <!--<fragment
+        android:id="@+id/bookings"
+        android:name="ru.pin120.luka.accountingsoftwaremobile.ui.installedsoftware.InstalledSoftwareFragment"
+        android:label="@string/installedSoftwares"
+        tools:layout="@layout/fragment_installedsoftware" />-->
+
+</navigation>

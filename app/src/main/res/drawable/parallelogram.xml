@@ -1,0 +1,6 @@
+<!-- res/drawable/parallelogram_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="0dp" />
+    <solid android:color="#C0FFC0" /> <!-- Цвет фона, замените на нужный вам -->
+    <padding android:left="20dp" android:right="-20dp" />
+</shape>
