@@ -1,8 +1,5 @@
 package ru.mivlgu.bookshop.adapters;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,28 +8,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.mivlgu.bookshop.R;
-import ru.mivlgu.bookshop.databinding.FragmentBookDetailBinding;
 import ru.mivlgu.bookshop.models.BookShop;
-import ru.mivlgu.bookshop.ui.book.BookDetailFragment;
-import ru.mivlgu.bookshop.utils.BookShopUtils;
+import ru.mivlgu.bookshop.utils.Utils;
+import ru.mivlgu.bookshop.utils.OnBookItemClickListener;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
     private List<BookShop> books = new ArrayList<>();
-    private FragmentManager fragmentManager;
 
-    public BookAdapter(FragmentManager fragmentManager){
-        this.fragmentManager = fragmentManager;
+    private List<BookShop> filtred_books = new ArrayList<>();
+
+    private OnBookItemClickListener onBookItemClickListener;
+
+    public void setOnBookItemClickListener(OnBookItemClickListener listener) {
+        this.onBookItemClickListener = listener;
     }
+
+    public BookAdapter(){}
 
     @NonNull
     @Override
@@ -47,7 +45,41 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     public void setData(List<BookShop> newList) {
         books.clear();
+        filtred_books.clear();
         books.addAll(newList);
+        filtred_books = new ArrayList<>(newList);
+        notifyDataSetChanged();
+    }
+
+    public void filterByAuthor(String author){
+        filtred_books.clear();
+        for (BookShop book : books) {
+            // Предполагая, что у BookShop есть метод getAuthors(), который возвращает список авторов
+            String bookAuthor = book.getAuthor().getLastname() + " " + book.getAuthor().getFirstname() + " " + book.getAuthor().getMidname();
+            if (bookAuthor.equals(author)) {
+                filtred_books.add(book);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void filterByPublisher(String publisher){
+        filtred_books.clear();
+        for (BookShop book : books) {
+            if (book.getPublisher().equals(publisher)) {
+                filtred_books.add(book);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void filterByCategory(String category){
+        filtred_books.clear();
+        for (BookShop book : books) {
+            if (book.getCategory().equals(category)) {
+                filtred_books.add(book);
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -57,22 +89,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.bookTitle.setText(book.getTitle().length() > 25 ? book.getTitle().substring(0,25) + "..." : book.getTitle());
         holder.bookAuthor.setText(book.getAuthor().toString());
         if(book.getImage() != ""){
-            holder.bookImage.setImageResource(BookShopUtils.getImageFromResourse(book.getImage()));
+            holder.bookImage.setImageResource(Utils.getImageFromResourse(book.getImage()));
         }
         else{
             // Если изображение не найдено, можно установить заглушку или другое действие
             holder.bookImage.setImageResource(R.drawable.placeholder_image);
         }
         holder.bookPrice.setText(String.format("Цена: %s", book.getPrice()));
-        holder.bookPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BookDetailFragment fragment = BookDetailFragment.newInstance(book);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
+
+        holder.bookImage.setOnClickListener(v -> {
+            if(onBookItemClickListener != null)
+                onBookItemClickListener.onBookItemClick(book);
         });
     }
 

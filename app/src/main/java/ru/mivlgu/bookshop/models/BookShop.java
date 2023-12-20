@@ -26,6 +26,16 @@ public class BookShop implements Serializable {
 
     private BigDecimal price;
 
+    private List<CopyBookShop> copyBooks;
+
+    public List<CopyBookShop> getCopyBooks() {
+        return copyBooks;
+    }
+
+    public void setCopyBooks(List<CopyBookShop> copyBooks) {
+        this.copyBooks = copyBooks;
+    }
+
     public BookShop(){}
 
     public BookShop(Long id, String title, AuthorShop author, CategoryShop category, PublisherShop publisher, int publication_year, int volume, String image, String description, BigDecimal price) {

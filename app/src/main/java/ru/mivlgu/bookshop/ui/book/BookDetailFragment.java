@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -19,9 +20,7 @@ public class BookDetailFragment extends Fragment {
 
     private BookShop book;
 
-    public BookDetailFragment() {
-        // Обязательный пустой конструктор
-    }
+    public BookDetailFragment() {}
 
     public static BookDetailFragment newInstance(BookShop book) {
         BookDetailFragment fragment = new BookDetailFragment();
@@ -46,6 +45,7 @@ public class BookDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_book_detail, container, false);
 
         // Заполните макет данными о книге
+        ImageView bookImage = view.findViewById(R.id.book_image);
         TextView bookTitle = view.findViewById(R.id.book_title);
         TextView bookAuthor = view.findViewById(R.id.book_author);
         TextView bookCategory = view.findViewById(R.id.book_category);

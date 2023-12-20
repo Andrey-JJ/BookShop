@@ -2,8 +2,8 @@ package ru.mivlgu.bookshop.utils;
 
 import ru.mivlgu.bookshop.R;
 
-public class BookShopUtils {
-    public BookShopUtils() {
+public class Utils {
+    public Utils() {
     }
 
     public static int getImageFromResourse(String img){
