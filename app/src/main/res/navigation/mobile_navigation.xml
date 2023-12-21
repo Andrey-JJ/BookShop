@@ -29,10 +29,10 @@
         android:label="@string/categories"
         tools:layout="@layout/fragment_category" />
 
-    <!--<fragment
+    <fragment
         android:id="@+id/bookings"
-        android:name="ru.pin120.luka.accountingsoftwaremobile.ui.installedsoftware.InstalledSoftwareFragment"
-        android:label="@string/installedSoftwares"
-        tools:layout="@layout/fragment_installedsoftware" />-->
+        android:name="ru.mivlgu.bookshop.ui.booking.BookingFragment"
+        android:label="@string/bookings"
+        tools:layout="@layout/fragment_booking" />
 
 </navigation>

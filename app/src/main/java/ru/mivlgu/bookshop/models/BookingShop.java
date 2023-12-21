@@ -1,17 +1,17 @@
 package ru.mivlgu.bookshop.models;
 
 public class BookingShop {
-    /*private int id;
+    private int id;
 
-    private CopyBookShop copyBook;
+    private BookShop book;
 
     private Reader reader;
 
     public BookingShop() {}
 
-    public BookingShop(int id, CopyBookShop copyBook, Reader reader) {
+    public BookingShop(int id, BookShop book, Reader reader) {
         this.id = id;
-        this.copyBook = copyBook;
+        this.book = book;
         this.reader = reader;
     }
 
@@ -19,7 +19,7 @@ public class BookingShop {
     public String toString() {
         return "BookingShop{" +
                 "id=" + id +
-                ", copyBook=" + copyBook +
+                ", book=" + book +
                 ", reader=" + reader +
                 '}';
     }
@@ -32,12 +32,12 @@ public class BookingShop {
         this.id = id;
     }
 
-    public CopyBookShop getCopyBook() {
-        return copyBook;
+    public BookShop getBook() {
+        return book;
     }
 
-    public void setCopyBook(CopyBookShop copyBook) {
-        this.copyBook = copyBook;
+    public void setBook(BookShop book) {
+        this.book = book;
     }
 
     public Reader getReader() {
@@ -46,5 +46,5 @@ public class BookingShop {
 
     public void setReader(Reader reader) {
         this.reader = reader;
-    }*/
+    }
 }
