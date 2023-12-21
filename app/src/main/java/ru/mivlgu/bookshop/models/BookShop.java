@@ -1,10 +1,57 @@
 package ru.mivlgu.bookshop.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class BookShop implements Serializable {
+public class BookShop implements Parcelable {
+
+    protected BookShop(Parcel in) {
+        id = in.readLong();
+        title = in.readString();
+        author = in.readParcelable(AuthorShop.class.getClassLoader());
+        category = in.readParcelable(CategoryShop.class.getClassLoader());
+        publisher = in.readParcelable(PublisherShop.class.getClassLoader());
+        publication_year = in.readInt();
+        volume = in.readInt();
+        image = in.readString();
+        description = in.readString();
+        price = (BigDecimal) in.readSerializable();
+    }
+
+    public static final Creator<BookShop> CREATOR = new Creator<BookShop>() {
+        @Override
+        public BookShop createFromParcel(Parcel in) {
+            return new BookShop(in);
+        }
+
+        @Override
+        public BookShop[] newArray(int size) {
+            return new BookShop[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(title);
+        dest.writeParcelable(author, flags);
+        dest.writeParcelable(category, flags);
+        dest.writeParcelable(publisher, flags);
+        dest.writeInt(publication_year);
+        dest.writeInt(volume);
+        dest.writeString(image);
+        dest.writeString(description);
+        dest.writeSerializable(price);
+    }
 
     private Long id;
 
@@ -25,16 +72,6 @@ public class BookShop implements Serializable {
     private String description;
 
     private BigDecimal price;
-
-    private List<CopyBookShop> copyBooks;
-
-    public List<CopyBookShop> getCopyBooks() {
-        return copyBooks;
-    }
-
-    public void setCopyBooks(List<CopyBookShop> copyBooks) {
-        this.copyBooks = copyBooks;
-    }
 
     public BookShop(){}
 

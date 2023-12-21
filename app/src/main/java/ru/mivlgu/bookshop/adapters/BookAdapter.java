@@ -16,7 +16,6 @@ import java.util.List;
 import ru.mivlgu.bookshop.R;
 import ru.mivlgu.bookshop.models.BookShop;
 import ru.mivlgu.bookshop.utils.Utils;
-import ru.mivlgu.bookshop.utils.OnBookItemClickListener;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
@@ -24,10 +23,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     private List<BookShop> filtred_books = new ArrayList<>();
 
-    private OnBookItemClickListener onBookItemClickListener;
+    private OnItemClickListener onItemClickListener;
 
-    public void setOnBookItemClickListener(OnBookItemClickListener listener) {
-        this.onBookItemClickListener = listener;
+    public interface OnItemClickListener{
+        void onItemClick(BookShop bookShop);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.onItemClickListener = listener;
     }
 
     public BookAdapter(){}
@@ -35,8 +38,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rv_book_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_book_item, parent, false);
         return new BookAdapter.BookViewHolder(view);
     }
 
@@ -97,9 +99,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
         holder.bookPrice.setText(String.format("Цена: %s", book.getPrice()));
 
-        holder.bookImage.setOnClickListener(v -> {
-            if(onBookItemClickListener != null)
-                onBookItemClickListener.onBookItemClick(book);
+        holder.itemView.setOnClickListener(view -> {
+            if(onItemClickListener != null)
+                onItemClickListener.onItemClick(book);
         });
     }
 

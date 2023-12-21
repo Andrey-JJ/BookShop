@@ -1,6 +1,6 @@
 package ru.mivlgu.bookshop.ui.book;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +29,8 @@ import ru.mivlgu.bookshop.databinding.FragmentBooksBinding;
 import ru.mivlgu.bookshop.models.BookShop;
 import ru.mivlgu.bookshop.models.view.BookViewModel;
 import ru.mivlgu.bookshop.utils.BaseFragment;
-import ru.mivlgu.bookshop.utils.OnBookItemClickListener;
 
-public class BooksFragment extends BaseFragment<FragmentBooksBinding> implements OnBookItemClickListener {
+public class BooksFragment extends BaseFragment<FragmentBooksBinding> {
     private Spinner spinnerPublisher, spinnerAuthor, spinnerCategory;
     @Override
     protected Class<? extends ViewModel> getViewModelClass() {
@@ -51,7 +50,11 @@ public class BooksFragment extends BaseFragment<FragmentBooksBinding> implements
     @Override
     protected RecyclerView.Adapter createAdapter() {
         BookAdapter bookAdapter = new BookAdapter();
-        bookAdapter.setOnBookItemClickListener(this);
+        bookAdapter.setOnItemClickListener(book -> {
+            Intent intent = new Intent(requireContext(), BookDetailActivity.class);
+            intent.putExtra("book", book);
+            startActivity(intent);
+        });
         return bookAdapter;
     }
 
@@ -84,24 +87,6 @@ public class BooksFragment extends BaseFragment<FragmentBooksBinding> implements
                 }
             }
         });
-    }
-
-    @Override
-    public void onBookItemClick(BookShop book) {
-        // Обработка клика на книге
-        // Создайте и откройте фрагмент для отображения деталей книги
-        BookDetailFragment bookDetailFragment = new BookDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("bookTitle", book.getTitle());
-        bundle.putString("bookAuthor", book.getAuthor().toString());
-        // Добавьте другие данные, которые хотите передать
-        bookDetailFragment.setArguments(bundle);
-
-        // Замените фрагмент с деталями книги
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, bookDetailFragment)
-                .addToBackStack(null)
-                .commit();
     }
 
     //Фильтрация данных
@@ -143,7 +128,12 @@ public class BooksFragment extends BaseFragment<FragmentBooksBinding> implements
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selectedAuthor = (String) spinnerAuthor.getSelectedItem();
-                ((BookAdapter) getAdapter()).filterByAuthor(selectedAuthor);
+                if (selectedAuthor.equals("Выберите автора")){
+                    ((BookAdapter) getAdapter()).filterByAuthor(null);
+                }
+                else {
+                    ((BookAdapter) getAdapter()).filterByAuthor(selectedAuthor);
+                }
             }
 
             @Override
@@ -156,7 +146,12 @@ public class BooksFragment extends BaseFragment<FragmentBooksBinding> implements
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selectedCategory = (String) spinnerCategory.getSelectedItem();
-                ((BookAdapter) getAdapter()).filterByCategory(selectedCategory);
+                if(selectedCategory.equals("Выберите категорию")){
+                    ((BookAdapter) getAdapter()).filterByCategory(null);
+                }
+                else {
+                    ((BookAdapter) getAdapter()).filterByCategory(selectedCategory);
+                }
             }
 
             @Override

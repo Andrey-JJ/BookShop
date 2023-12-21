@@ -1,9 +1,38 @@
 package ru.mivlgu.bookshop.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class CategoryShop implements Serializable {
+public class CategoryShop implements Parcelable {
+
+    protected CategoryShop(Parcel in) {
+        name = in.readString();
+    }
+
+    public static final Creator<CategoryShop> CREATOR = new Creator<CategoryShop>() {
+        @Override
+        public CategoryShop createFromParcel(Parcel in) {
+            return new CategoryShop(in);
+        }
+
+        @Override
+        public CategoryShop[] newArray(int size) {
+            return new CategoryShop[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
 
     private int id;
 

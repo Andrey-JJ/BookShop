@@ -11,7 +11,6 @@
     <string name="authors">Авторы</string>
     <string name="publishers">Издатели</string>
     <string name="categories">Категории</string>
+    <string name="bookings">Корзина</string>
     <string name="copybooks">Экземпляры книг</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
 </resources>
