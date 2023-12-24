@@ -2,6 +2,7 @@ package ru.mivlgu.bookshop.ui.booking;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -40,7 +41,33 @@ public class BookingFragment extends BaseFragment<FragmentBookingBinding> {
 
     @Override
     protected RecyclerView.Adapter createAdapter() {
-        return new BookingAdapter();
+        BookingAdapter adapter = new BookingAdapter();
+        adapter.setOnBookingDeleteListner(new BookingAdapter.OnBookingDeleteListner() {
+            @Override
+            public void onBookingDelete(int position, BookingShop bookingShop) {
+                deleteBooking(position, bookingShop);
+            }
+        });
+        return adapter;
+    }
+
+    private void deleteBooking(int position, BookingShop booking){
+        ServiceApi.deleteBooking(booking.getId(), new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(requireContext(), "Книга убрана из корзины", Toast.LENGTH_SHORT).show();
+                    ((BookingAdapter) getAdapter()).removeItem(position);
+                }
+                else {
+                    Toast.makeText(requireContext(), "Ошибка при удалении книги", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(requireContext(), "Ошибка при выполнении запроса", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

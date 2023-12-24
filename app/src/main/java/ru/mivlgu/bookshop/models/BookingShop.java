@@ -1,7 +1,7 @@
 package ru.mivlgu.bookshop.models;
 
 public class BookingShop {
-    private int id;
+    private Long id;
 
     private BookShop book;
 
@@ -9,8 +9,13 @@ public class BookingShop {
 
     public BookingShop() {}
 
-    public BookingShop(int id, BookShop book, Reader reader) {
+    public BookingShop(Long id, BookShop book, Reader reader) {
         this.id = id;
+        this.book = book;
+        this.reader = reader;
+    }
+
+    public BookingShop(BookShop book, Reader reader) {
         this.book = book;
         this.reader = reader;
     }
@@ -24,11 +29,11 @@ public class BookingShop {
                 '}';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

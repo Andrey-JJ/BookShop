@@ -55,11 +55,8 @@
 
         <Button
             android:id="@+id/btn_rv_booking_del"
-            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textColor="#000"
             android:layout_marginTop="8dp"
             android:gravity="center" />
     </LinearLayout>
